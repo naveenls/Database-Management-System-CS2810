@@ -1,0 +1,101 @@
+Valid Queries:
+
+    1) Table Creation: 
+        TABLE CREATE table_name column_name(column_type)(,column_name(column_type))*;
+        column_type is either STRING or INT.
+        Ex: TABLE CREATE table1 name(STRING),roll_no(INT);
+            TABLE CREATE table2 college(STRING);
+
+    2) Table Deletion:
+        TABLE DELETE table_name;
+        Ex: TABLE DELETE table1;
+    
+    3) Table Querying:
+        a) Select statement:
+            SELECT (MIN(column_name)|MAX(column_name)|COUNT)? (DISTINCT)? (*|column_name(,column_name)*);
+            Ex: SELECT *; SELECT DISTINCT *; SELECT col1,col3; SELECT MIN(col1) *; SELECT MAX(col3) DISTINCT c2,c5;
+                SELECT COUNT DISTINCT col1,col2; SELECT COUNT *; SELECT MIN(col2) *;
+
+        b) Update statement: (It updates the given columns of the tuples selected by WHERE statement)
+            UPDATE (column_name=new_value)(,column_name=new_value)*;
+            Ex: UPDATE col2=7; UPDATE col1=6,col2=8,col3=HELLO;
+        
+        c) DELETE statement: (It deletes the tuples selected by WHERE statement)
+            DELETE;
+
+        d) WHERE statement: (It selects the tuples satisfying the given condition)
+            WHERE condition( (AND|OR) condition)*;
+            condition=(NOT)? column_name(type)value
+            type=(<|>|<=|>=|!=|=)
+            Ex: WHERE col1<=6; WHERE col1>7 OR col2!=5 AND col3>=hello;
+                WHERE NOT col1<=10 AND NOT col2=5 OR col3<hello;
+            Order of Precedence: NOT>AND>OR
+
+        e) Order statement: (It orders the output of the Select statement by column_name in either ASC or DSC)
+            ORDER column_name (ASC|DSC);
+            Ex: ORDER col2 ASC;            //ASC for Ascending and DSC for DESCENDING
+
+        f) Insert Into statement:
+            INSERT value(,value)*;INTO table_name; (Number of input values must match Number of columns in given table)
+            Ex: INSERT 5,6,hello;INTO table1;
+
+        g) From statement: (This is a must statement in Querying)
+            FROM table_name; (Used to specify the table for Querying)
+
+        h) Union statement:
+            (select_st)(from_st)(where_st)?(UNION;)(select_st)(from_st)(where_st)?
+            UNION selects distinct tuples. Also select_st should not contain MIN,MAX and COUNT.
+            UNION is used to union tuples from two tables (Maybe same) in a database. Number of columns selected and
+            column types of both tables should match.
+
+        valid table queries: (select_st|update_st|delete_st)(from_st)(where_st|order_st|(where_st)(order_st))?
+                              insert_into_st
+                              union_st
+
+Examples:
+    TABLE CREATE table1 col1(STRING),col2(INT),col3(STRING);
+    INSERT abc,5,cde;INTO table1;
+    INSERT cdf,6,inn;INTO table1;
+    INSERT gfg,6,tpp;INTO table1;
+    INSERT gfg,5,fpp;INTO table1;
+    INSERT abc,9,cde;INTO table1;
+    SELECT MIN(col2) c1,c3;FROM table1;
+    Output:
+        abc cde
+        gfg fpp
+    SELECT DISTINCT c1,c3;FROM table1;
+    Output:
+        abc cde
+        cdf inn
+        gfg tpp
+        gfg fpp
+    SELECT COUNT DISTINCT c1,c3;FROM table1;
+    Output:
+        4
+    SELECT COUNT c1,c3;FROM table1;
+    Output:
+        5
+    SELECT *;FROM table1;WHERE c2=5;
+    Output:
+        abc 5 cde
+        gfg 5 fpp
+    SELECT *;FROM table1;WHERE c2<=6;ORDER c2 ASC;
+    Output:
+        abc 5 cde
+        gfg 5 fpp
+        cdf 6 inn
+        gfg 6 tpp
+    UPDATE c3=ttt;FROM table1;WHERE c3=cde;
+        Column3 of rows 1 and 5 will be updated to cde
+    DELETE;FROM table1;WHERE c2=6;
+        Rows 2 and 3 will be deleted
+    DELETE;FROM table1;
+        Deleted all the entries in table1
+    TABLE CREATE table2 col1(STRING),col2(STRING),col3(STRING);
+    INSERT abc,fff,rrr;INTO table2;
+    INSERT cdf,ttt,inn;INTO table2;
+    SELECT c1,c3;FROM table1;WHERE c1=abc;UNION;SELECT c1,c3;FROM table2;WHERE c1=abc;
+    Output:
+        abc cde
+        abc rrr
+    SELECT *;FROM table1;UNION;SELECT *;FROM table2; //Invalid because of column type mismatch
