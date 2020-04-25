@@ -7,11 +7,11 @@ Also there are three classes named Database,Table_Manager,Queries for handling s
 1. Download this repositiory and extract the zip file in **Windows** OS.
 2. Note: A directory named **Database** and a **meta.txt** inside Database folder in the working Directory is necessary to run this program.(I have already created it)
 
-3. ## Compiling: Execute the following command in the working directory
+3. Compiling: Execute the following command in the working directory
 ```
 g++ .\main.cpp .\DTBase.cpp .\Table_Manager.cpp .\Query.cpp -std=c++14
 ```
-4. ## Execution:
+4. Execution:
 ```
 .\a.exe
 ```
