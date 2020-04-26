@@ -1,5 +1,5 @@
 # Database-Management-System-CS2810
-This project is an Object Orineted implementation of DBMS. It is a sofware for Storing and Retriving data from disk based on User queiries.
+This project is an Object Orineted implementation of DBMS. It is a sofware for Storing and Retriving data from disk based on User queries.
 It allows users to Create Database,Delete Database and Query in a Database.
 Also there are three classes named Database,Table_Manager,Queries for handling storage and retrival of data.
 
