@@ -20,4 +20,4 @@ g++ .\main.cpp .\DTBase.cpp .\Table_Manager.cpp .\Query.cpp -std=c++14
 
 Valid queries and their syntax is given in "Queries.txt" file. 
 
-Note: This works only on Windows
+**Note:** This works only on Windows. Also Database name and Table Name are case insensitive. Ex: Two tables with name table1 and Table1 are are not allowed.
